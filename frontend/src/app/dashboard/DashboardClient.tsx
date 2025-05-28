@@ -2,16 +2,23 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-const fetchRequests = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/requests`);
-    if (!res.ok) throw new Error('Failed to fetch');
-    return res.json();
-  };
-  
-  
+// Define the type for a guest request
+type GuestRequest = {
+  id: string;
+  guestPhone: string;
+  requestText: string;
+  createdAt: string; // or Date if your API returns parsed dates
+};
+
+// Fetch function with return type
+const fetchRequests = async (): Promise<GuestRequest[]> => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/requests`);
+  if (!res.ok) throw new Error('Failed to fetch');
+  return res.json();
+};
 
 export default function DashboardClient() {
-  const { data: requests = [], isLoading } = useQuery({
+  const { data: requests = [], isLoading } = useQuery<GuestRequest[]>({
     queryKey: ['requests'],
     queryFn: fetchRequests,
   });
@@ -30,7 +37,7 @@ export default function DashboardClient() {
           </tr>
         </thead>
         <tbody>
-          {requests.map((req: any) => (
+          {requests.map((req) => (
             <tr key={req.id} className="border-t">
               <td className="p-2 border">{req.guestPhone}</td>
               <td className="p-2 border">{req.requestText}</td>
