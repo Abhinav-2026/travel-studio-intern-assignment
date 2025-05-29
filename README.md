@@ -34,7 +34,7 @@ travel-studio-intern-assignment/
 ├── backend/         # NestJS backend with Prisma + PostgreSQL
 ├── frontend/        # Next.js frontend (dashboard)
 └── workflow/        # n8n workflows for WhatsApp integration
-Backend Setup (NestJS + Prisma)
+## Backend Setup (NestJS + Prisma)
 1:Initialize NestJS project:
 cd backend
 npx @nestjs/cli new . --skip-git
@@ -66,7 +66,7 @@ POST http://localhost:3000/api/requests
 https://travel-studio-intern-assignment-2144.onrender.com/api/requests
 
  
-n8n WhatsApp Workflow Integration
+## n8n WhatsApp Workflow Integration
 1:Create an account on n8n.io (free for 15 days).
 2:Add WhatsApp Trigger node (sandbox credentials).
 3:Extract guestPhone and requestText from the message.
@@ -75,7 +75,7 @@ POST https://travel-studio-intern-assignment-2144.onrender.com/api/requests
 5:Send confirmation back to the same WhatsApp chat.
 
  
-Frontend (Next.js Dashboard)
+## Frontend (Next.js Dashboard)
 1:Create frontend app:
 cd frontend
 npx create-next-app@latest frontend --typescript
