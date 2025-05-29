@@ -1,0 +1,140 @@
+{
+    "name": "Guest Logging",
+    "nodes": [
+      {
+        "parameters": {
+          "updates": [
+            "messages"
+          ],
+          "options": {}
+        },
+        "type": "n8n-nodes-base.whatsAppTrigger",
+        "typeVersion": 1,
+        "position": [
+          -580,
+          0
+        ],
+        "id": "4b372b37-d586-402e-bc8a-a2719c4726a6",
+        "name": "WhatsApp Trigger",
+        "webhookId": "1f19c7ad-16ea-4464-a7fd-a2b4893a69e7",
+        "credentials": {
+          "whatsAppTriggerApi": {
+            "id": "fvOeOU4PHaBy7qil",
+            "name": "WhatsApp OAuth account 2"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "send",
+          "phoneNumberId": "595811583626542",
+          "recipientPhoneNumber": "={{ $json.guestPhone }}",
+          "textBody": "Request received! Our staff will assist you soon.",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.whatsApp",
+        "typeVersion": 1,
+        "position": [
+          220,
+          0
+        ],
+        "id": "7245f11b-c1a8-43e3-8a8c-e08de21b99d0",
+        "name": "WhatsApp Business Cloud",
+        "webhookId": "cce39099-5b23-4995-834f-faf74ca7bd6b",
+        "credentials": {
+          "whatsAppApi": {
+            "id": "4uaN9lH0pY3ncIw5",
+            "name": "WhatsApp account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const message = items[0].json;\n\nconst guestPhone = message.messages?.[0]?.from;\nconst requestText = message.messages?.[0]?.text?.body;\n\nreturn [{\n  json: {\n    guestPhone,\n    requestText\n  }\n}];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -360,
+          0
+        ],
+        "id": "58cf4009-81c7-4c7d-ae02-29a2ba498c33",
+        "name": "Code"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://travel-studio-intern-assignment-2144.onrender.com/api/requests",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "guestPhone",
+                "value": "={{$json[\"guestPhone\"]}}"
+              },
+              {
+                "name": "requestText",
+                "value": "={{$json[\"requestText\"]}}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -140,
+          0
+        ],
+        "id": "2be702ea-2071-47d7-9d74-121ea6511e4e",
+        "name": "HTTP Request"
+      }
+    ],
+    "pinData": {},
+    "connections": {
+      "WhatsApp Trigger": {
+        "main": [
+          [
+            {
+              "node": "Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "WhatsApp Business Cloud",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "active": true,
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "versionId": "3d9a6d95-775c-4656-b03a-a6166ec152c5",
+    "meta": {
+      "templateCredsSetupCompleted": true,
+      "instanceId": "b390ea5f9c44c3fd15039005cd97b806d614fa0e21c97808b68d57c555153a3d"
+    },
+    "id": "wr3eKqkqQpDKdk3v",
+    "tags": []
+  }
