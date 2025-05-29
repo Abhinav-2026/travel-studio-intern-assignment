@@ -35,15 +35,15 @@ travel-studio-intern-assignment/
 ├── frontend/        # Next.js frontend (dashboard)
 └── workflow/        # n8n workflows for WhatsApp integration
 ## Backend Setup (NestJS + Prisma)
-### :Initialize NestJS project:
+### Initialize NestJS project:
   #### cd backend
 #### npx @nestjs/cli new . --skip-git
-### :Install dependencies:
+### Install dependencies:
 npm install @nestjs/config @nestjs/typeorm @nestjs/common class-validator class-transformer prisma @prisma/client
-### :Set up Prisma:
+### Set up Prisma:
 npx prisma init
-### :Configure PostgreSQL connection in .env using Render DB URL.
-### :Define your model in prisma/schema.prisma:
+### Configure PostgreSQL connection in .env using Render DB URL.
+### Define your model in prisma/schema.prisma:
 model Request {
   id          String   @id @default(uuid())
   guestPhone  String
@@ -53,33 +53,33 @@ model Request {
 ### :Create and migrate DB:
 npx prisma migrate dev --name init
 npx prisma generate
-### :Generate Request Module:
+### Generate Request Module:
 npx nest g module requests
 npx nest g service requests
 npx nest g controller requests
-### :API Endpoints:
+### API Endpoints:
 POST /api/requests – Create guest request
 GET /api/requests – Fetch all requests
-### :Test using Postman:
+### Test using Postman:
 POST http://localhost:3000/api/requests
 🔗 Deployed Backend
 https://travel-studio-intern-assignment-2144.onrender.com/api/requests
 
  
 ## n8n WhatsApp Workflow Integration
-### :Create an account on n8n.io (free for 15 days).
-### :Add WhatsApp Trigger node (sandbox credentials).
-### :Extract guestPhone and requestText from the message.
-### :Use HTTP Request node to send data to:
+### Create an account on n8n.io (free for 15 days).
+### Add WhatsApp Trigger node (sandbox credentials).
+### Extract guestPhone and requestText from the message.
+### Use HTTP Request node to send data to:
 POST https://travel-studio-intern-assignment-2144.onrender.com/api/requests
-### :Send confirmation back to the same WhatsApp chat.
+### Send confirmation back to the same WhatsApp chat.
 
  
 ## Frontend (Next.js Dashboard)
-### :Create frontend app:
+### Create frontend app:
 #### cd frontend
 #### npx create-next-app@latest frontend --typescript
-### :Install Tailwind CSS:
+### Install Tailwind CSS:
 #### npm install -D tailwindcss postcss autoprefixer
 #### npx tailwindcss init -p
 Set up Tailwind in tailwind.config.js and globals.css.
@@ -91,10 +91,6 @@ Set up Tailwind in tailwind.config.js and globals.css.
 🌐 Deployed Frontend
 https://abhinavkumargydexpinternassignment-five.vercel.app
 
-✅ Features
-WhatsApp to API data relay using n8n
-REST API with NestJS + PostgreSQL
-Dashboard to monitor requests
-Fully deployed and production-ready
+
 
 
